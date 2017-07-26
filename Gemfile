@@ -34,8 +34,12 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'devise'
 gem 'milia'
+
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
+
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem "recaptcha", require: "recaptcha/rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
