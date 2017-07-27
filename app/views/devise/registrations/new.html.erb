@@ -1,88 +1,37 @@
-<div class="authform">
-  <div class="block" id="block-signup">
-    <h2>New Organization Sign up</h2>
-    <div class="content">
-      <span class="description">
-        <i>
-          If you're a member of an existing group in our system,
-          click the activate link in the invitation email from your organization's admin.
-          You should not sign up for a new organizational account.
-          <br/>
-        </i>
-      </span>
-      <div class="flash">
-        <% flash.each do |type, message| %>
-          <div class="message <%= type %>">
-            <p>
-              <%= message %>
-            </p>
-          </div>
-        <% end %>
+<%= bootstrap_devise_error_messages! %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= t('.sign_up', :default => "Sign up") %></h4>
+  </div>
+  <div class="panel-body">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { role: "form", class: 'cc_form' }) do |f| %>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, class: "form-control" %>
       </div>
-      <% flash.clear  # clear contents so we won't see it again %>
-      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form" }) do |f| %>
-        <%= devise_error_messages! %>
-
-        <div class="form-group">
-          <%= f.label :email %>
-          <span class="description">Ex. test@example.com</span>
-          <%= f.text_field :email, :class => "form-control" %>
-        </div>
-
-        <%= fields_for( :tenant ) do |w| %>
-          <div class="form-group col-md-6 no-right-padding">
-            <%= w.label( :name, 'Organization') %>
-            <span class="description">unique name for your group or organization for the new account</span>
-            <%= w.text_field( :name, :class => "form-control") %>
-          </div>
-        <% end %>
-
+      <div class="form-group">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+      <%= fields_for( :tenant ) do |w| %>
         <div class="form-group col-md-6 no-left-padding">
-          <%= f.label :password %>
-          <span class="description">must be at least 8 characters</span>
-          <%= f.password_field :password, :class => "form-control" %>
+          <%= w.label :name, 'Organization' %>
+          <span class='description'>(Unique name for your group or organization for the new account)</span>
+          <%= w.text_field :name, required: true, class: "form-control" %>
         </div>
-
         <div class="form-group col-md-6 no-right-padding">
-          <%= f.label :password_confirmation, "Re-enter Password" %>
-          <span class="description">to confirm your password</span>
-          <%= f.password_field :password_confirmation, :class => "form-control" %>
+          <%= w.label :plan %>
+          <%= w.select :plan, options_for_select(Plan.options, params[:plan]), {}, required: true,
+          class: "form-control" %>
         </div>
-
-        <%= fields_for( :tenant ) do |w| %>
-          <div class="form-group col-md-6 no-left-padding">
-            <%= w.label :name, 'Organization' %>
-            <span class='description'>(Unique name for your group or organization for the new account)</span>
-            <%= w.text_field :name, required: true, class: "form-control" %>
-          </div>
-
-          <div class="form-group col-md-6 no-right-padding">
-            <%= w.label :plan %>
-            <%= w.select :plan, options_for_select(Plan.options, params[:plan]),{}, required: true, class: "form-control" %>
-          </div>
-        <% end %>
-
-
-        <div class="group">
-          <% if ::Milia.use_coupon %>
-            <% @coupon ||= {} %>
-            <div class="form-group col-md-4">
-              <%= label_tag( 'coupon', 'Coupon code') %>
-              <span class="description">optional promotional code, if any</span>
-              <%= text_field_tag( "coupon[coupon]", @coupon['coupon'].to_s, :size => 8, :class => "form-control" ) %>
-            </div>
-          <% end %>
-          <% if ::Milia.use_recaptcha %>
-            <%= recaptcha_tags( :display => { :theme => 'clean' }) %>
-          <% end %>
-        </div>
-        <div class="group navform wat-cf">
-          <button class="button" type="submit">
-            Sign up
-          </button>
-        </div>
+        
       <% end %>
-      <%= render :partial => "devise/shared/links" %>
-    </div>
+      <%= f.submit t('.sign_up', :default => "Sign up"), class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>
+<%= render "devise/shared/links" %>
