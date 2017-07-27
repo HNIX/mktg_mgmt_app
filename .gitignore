@@ -20,7 +20,7 @@
 # Ignore Byebug command history file.
 .byebug_history
 
-.env
+.zshrc
 
 # Ignore application configuration
 /config/application.yml
