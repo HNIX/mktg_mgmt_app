@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170803211613) do
+ActiveRecord::Schema.define(version: 20170804161501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_item_groups", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_action_item_groups_on_project_id", using: :btree
+  end
 
   create_table "action_items", force: :cascade do |t|
     t.string   "name"
@@ -21,8 +29,10 @@ ActiveRecord::Schema.define(version: 20170803211613) do
     t.string   "status"
     t.date     "due_date"
     t.integer  "project_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "action_item_group_id"
+    t.index ["action_item_group_id"], name: "index_action_items_on_action_item_group_id", using: :btree
     t.index ["project_id"], name: "index_action_items_on_project_id", using: :btree
   end
 
@@ -125,6 +135,8 @@ ActiveRecord::Schema.define(version: 20170803211613) do
     t.index ["tenant_id"], name: "index_users_on_tenant_id", using: :btree
   end
 
+  add_foreign_key "action_item_groups", "projects"
+  add_foreign_key "action_items", "action_item_groups"
   add_foreign_key "action_items", "projects"
   add_foreign_key "artifacts", "projects"
   add_foreign_key "members", "tenants"

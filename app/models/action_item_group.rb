@@ -1,6 +1,8 @@
-class ActionItem < ApplicationRecord
+class ActionItemGroup < ApplicationRecord
   belongs_to :project
-  belongs_to :action_item_group
+  has_many :action_items
+
   validates_presence_of :name
   validates_uniqueness_of :name
+
 end

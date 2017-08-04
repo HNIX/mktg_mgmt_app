@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :tenant
   has_many :artifacts, dependent: :destroy
   has_many :action_items, dependent: :destroy
+  has_many :action_item_groups, dependent: :destroy
   has_many :user_projects
   has_many :users, through: :user_projects
 

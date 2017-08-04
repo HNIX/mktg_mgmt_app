@@ -16,6 +16,7 @@ class ActionItemsController < ApplicationController
   def new
     @action_item = ActionItem.new
     @action_item.project_id = params[:project_id]
+    @action_item.action_item_group_id = params[:action_item_group_id]
   end
 
   # GET /action_items/1/edit
@@ -70,6 +71,6 @@ class ActionItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def action_item_params
-      params.require(:action_item).permit(:name, :description, :status, :due_date, :project_id)
+      params.require(:action_item).permit(:name, :description, :status, :due_date, :project_id, :action_item_group_id)
     end
 end

@@ -1,0 +1,30 @@
+<%= form_for @action_item_group, :html => { :class => "form-horizontal action_item_group" } do |f| %>
+
+  <% if @action_item_group.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@action_item_group.errors.count, "error") %> prohibited this action_item_group from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @action_item_group.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name, :class => 'form-control' %>
+      </div>
+    </div>
+    <br />
+
+  <%= f.hidden_field :project_id %>
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")), tenant_project_path(tenant_id: Tenant.current_tenant_id, id: @action_item_group.project_id), :class => 'btn btn-default' %>
+
+<% end %>

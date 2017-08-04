@@ -31,6 +31,12 @@
         <p class="lead">You don't have any action items for this project</p>
         <%= link_to 'New Action Item', new_action_item_path(project_id: @project.id), :class => 'btn btn-primary' %>
       <% end %>
+      <% if @project.action_item_groups.exists? %>
+        <%= render 'action_item_groups/list', action_item_groups: @project.action_item_groups %>
+      <% else %>
+        <p class="lead">You don't have any action item groups for this project</p>
+        <%= link_to 'New Action Item Group', new_action_item_group_path(project_id: @project.id), :class => 'btn btn-primary' %>
+      <% end %>
     </div>
     <div role="tabpanel" class="tab-pane" id="attachments">
       <%= render 'artifacts/list', artifacts: @project.artifacts %>

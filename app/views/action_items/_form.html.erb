@@ -20,6 +20,13 @@
       <div class="controls">
         <%= f.text_field :name, :class => 'form-control' %>
       </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :action_item_group, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.collection_select :action_item_group_id, ActionItemGroup.where(project_id: @action_item.project_id), :id, :name, { prompt: "Choose a group" }, class: "form-control" %>
+      </div>
+    </div>
     <div class="control-group">
       <%= f.label :description, :class => 'control-label' %>
       <div class="controls">
@@ -41,7 +48,7 @@
     </div>
     <br />
 
-  <%= f.hidden_field :project_id %>    </div>
+  <%= f.hidden_field :project_id %>
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")), tenant_project_path(tenant_id: Tenant.current_tenant_id, id: @action_item.project_id), :class => 'btn btn-default' %>
 

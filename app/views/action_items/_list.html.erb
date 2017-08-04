@@ -6,6 +6,7 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:description) %></th>
       <th><%= model_class.human_attribute_name(:status) %></th>
+      <th><%= model_class.human_attribute_name(:action_item_group) %></th>
       <th><%= model_class.human_attribute_name(:due_date) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -16,6 +17,7 @@
         <td><%= link_to action_item.name, action_item_path(action_item), class: 'main-link' %></td>
         <td><%= action_item.description %></td>
         <td><%= action_item.status %></td>
+        <td><%= action_item.action_item_group.name if action_item.action_item_group %></td>
         <td><%= action_item.due_date %></td>
         <td>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

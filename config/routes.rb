@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :action_item_groups
   resources :action_items
   resources :user_projects
   resources :artifacts, except: :index
