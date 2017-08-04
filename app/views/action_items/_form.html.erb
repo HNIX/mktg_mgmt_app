@@ -1,0 +1,48 @@
+<%= form_for @action_item, :html => { :class => "form-horizontal action_item" } do |f| %>
+
+  <% if @action_item.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@action_item.errors.count, "error") %> prohibited this action_item from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @action_item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name, :class => 'form-control' %>
+      </div>
+    <div class="control-group">
+      <%= f.label :description, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :description, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :status, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.select :status, options_for_select(Status.options, params[:status]), {}, required: true,
+        class: "form-control" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :due_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :due_date, :class => 'form-control  datepicker' %>
+      </div>
+    </div>
+    <br />
+
+  <%= f.hidden_field :project_id %>    </div>
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")), tenant_project_path(tenant_id: Tenant.current_tenant_id, id: @action_item.project_id), :class => 'btn btn-default' %>
+
+<% end %>

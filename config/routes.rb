@@ -1,13 +1,19 @@
 Rails.application.routes.draw do
 
-  resources :artifacts
+  resources :action_items
+  resources :user_projects
+  resources :artifacts, except: :index
   resources :tenants do
-    resources :projects
+    resources :projects do
+      get 'users', on: :member
+      put 'add_user', on: :member
+    end
   end
-
   resources :members
   get 'home/index'
-  root 'home#index'
+
+   root :to => "home#index"
+
 
   # *MUST* come *BEFORE* devise's definitions (below)
   as :user do
@@ -24,5 +30,5 @@ Rails.application.routes.draw do
   match '/plan/edit' => 'tenants#edit', via: :get, as: :edit_plan
   match '/plan/update' => 'tenants#update', via: [:put, :patch], as: :update_plan
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 end
